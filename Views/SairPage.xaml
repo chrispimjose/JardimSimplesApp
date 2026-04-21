@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JardimSimplesApp.Views.SairPage"
+             Title="SairPage">
+    <VerticalStackLayout Padding="20" Spacing="20">
+
+        <Label Text="Deseja sair do aplicativo?"
+               FontSize="20"
+               HorizontalOptions="Center" />
+
+        <Button Text="Sair"
+                Clicked="OnSairClicked"
+                BackgroundColor="#C62828"/>
+
+    </VerticalStackLayout>
+</ContentPage>

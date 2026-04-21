@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JardimSimplesApp.Views.ListaServicosPage"
+             Title="Serviços de Jardinagem">
+    
+        <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="12">
+
+            <!-- Título -->
+            <Label Text="Controle de Serviços"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource VerdePrincipal}" />
+
+            <!-- Botões -->
+            <HorizontalStackLayout Grid.Row="1" Spacing="5">
+                <Button Text="Novo Serviço"
+                        Clicked="OnNovoServicoClicked"
+                        HorizontalOptions="FillAndExpand" />
+
+                <Button Text="Editar Selecionado"
+                        Clicked="OnEditarServicoClicked"
+                        BackgroundColor="{StaticResource VerdeSecundario}"
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Excluir Selecionado"
+                        Clicked="OnExcluirServicoClicked"
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand" />
+        </HorizontalStackLayout>
+
+            <!-- Lista -->
+        <CollectionView 
+                    Grid.Row="2"
+                    x:Name="ServicosCollectionView"
+                    SelectionMode="Single">
+            
+
+                <CollectionView.EmptyView>
+                    <ContentView>
+                        <Label  Text="Nenhum serviço cadastrado."
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                    </ContentView>                   
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,6"
+                               Padding="12"
+                               CornerRadius="12"
+                               BackgroundColor="{StaticResource VerdeClaro}"
+                               BorderColor="{StaticResource VerdeSecundario}">
+
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Cliente}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource VerdePrincipal}" />
+
+                                <Label Text="{Binding TipoServico, StringFormat='Serviço: {0}'}" />
+                                <Label Text="{Binding Endereco, StringFormat='Endereço: {0}'}" />
+                                <Label Text="{Binding DataServico, StringFormat='Data: {0:dd/MM/yyyy}'}" />
+                                <Label Text="{Binding Valor, StringFormat='Valor: R$ {0:F2}'}" />
+                                <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+</ContentPage>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JardimSimplesApp.Views.SobrePage"
+             Title="Sobre">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <Label Text="Sobre o Aplicativo"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource VerdePrincipal}" />
+
+            <Frame BackgroundColor="{StaticResource VerdeClaro}"
+                   BorderColor="{StaticResource VerdeSecundario}"
+                   CornerRadius="12"
+                   Padding="16">
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{Binding NomeAplicativo}"
+                           FontSize="22"
+                           FontAttributes="Bold" />
+
+                    <Label Text="{Binding Descricao}"
+                           LineBreakMode="WordWrap" />
+
+                    <Label Text="Recursos apresentados:"
+                           FontAttributes="Bold" />
+
+                    <Label Text="{Binding Recursos}"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
