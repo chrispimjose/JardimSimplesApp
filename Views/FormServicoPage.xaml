@@ -5,7 +5,10 @@
              Title="Cadastro de Serviço">
     
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="12">
+        
+        <!-- Formulário de cadastro/edição de serviço -->
+            
+            <VerticalStackLayout Padding="20" Spacing="12">
 
             <Label Text="Cadastro / Edição de Serviço"
                    FontSize="24"

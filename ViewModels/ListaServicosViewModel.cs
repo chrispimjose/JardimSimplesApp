@@ -6,9 +6,13 @@ using JardimSimplesApp.Views;
 
 namespace JardimSimplesApp.ViewModels;
 
+// ViewModel para a página de listagem de serviços.
 public class ListaServicosViewModel : BaseViewModel
 {
+    // Campo privado para armazenar o item selecionado.
     private ServicoJardinagem? _servicoSelecionado;
+
+    // Comando para editar o item selecionado.
     public Command EditarCommand { get; }
 
     // A View enxerga esta coleção e exibe os itens na lista.
@@ -29,6 +33,7 @@ public class ListaServicosViewModel : BaseViewModel
         }
     }
 
+    // Construtor onde inicializamos o comando.
     public ListaServicosViewModel()
     {
         EditarCommand = new Command(
@@ -37,6 +42,7 @@ public class ListaServicosViewModel : BaseViewModel
         );
     }
 
+    // Método para editar o item selecionado, navegando para o formulário.
     private async Task Editar()
     {
         if (ServicoSelecionado == null)
@@ -56,7 +62,7 @@ public class ListaServicosViewModel : BaseViewModel
     // Comando para limpar a seleção, útil quando a página reaparece.
     public ICommand LimparSelecaoCommand { get; }
 
-
+    // Método para limpar a seleção, garantindo que o item anterior não permaneça selecionado.
     private void LimparSelecao()
     {
         ServicoSelecionado = null;

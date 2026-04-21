@@ -5,6 +5,7 @@ namespace JardimSimplesApp.ViewModels;
 
 public class FormServicoViewModel : BaseViewModel
 {
+    // Campos privados para armazenar os valores dos campos do formulário.
     private int _id;
     private string _cliente = string.Empty;
     private string _tipoServico = string.Empty;
@@ -17,6 +18,7 @@ public class FormServicoViewModel : BaseViewModel
     // Lista fixa de opções para o Picker de status.
     public List<string> StatusDisponiveis { get; } = new() { "Agendado", "Em andamento", "Concluído" };
 
+    // Propriedades públicas para vinculação com a interface do usuário.
     public int Id
     {
         get => _id;
@@ -67,8 +69,11 @@ public class FormServicoViewModel : BaseViewModel
         set => SetProperty(ref _estaEditando, value);
     }
 
+    // Propriedade para exibir o título correto no formulário,
+    // dependendo se estamos editando ou criando um novo serviço.
     public string TituloFormulario => EstaEditando ? "Editar Serviço" : "Novo Serviço";
 
+    // Método para carregar os dados de um serviço existente para edição.
     public void CarregarParaEdicao(ServicoJardinagem servico)
     {
         Id = servico.Id;
@@ -82,6 +87,8 @@ public class FormServicoViewModel : BaseViewModel
         OnPropertyChanged(nameof(TituloFormulario));
     }
 
+    //  Método para preparar o formulário para um novo cadastro,
+    //  limpando os campos e definindo os valores padrão.
     public void PrepararNovoCadastro()
     {
         Id = 0;
@@ -95,6 +102,7 @@ public class FormServicoViewModel : BaseViewModel
         OnPropertyChanged(nameof(TituloFormulario));
     }
 
+    // Método para validar os campos do formulário antes de salvar.
     public bool ValidarCampos(out string mensagemErro)
     {
         if (string.IsNullOrWhiteSpace(Cliente) ||
@@ -107,6 +115,7 @@ public class FormServicoViewModel : BaseViewModel
             return false;
         }
 
+        // Verifica se o valor é um número decimal válido.
         if (!decimal.TryParse(ValorTexto, out _))
         {
             mensagemErro = "Digite um valor numérico válido.";
@@ -117,11 +126,14 @@ public class FormServicoViewModel : BaseViewModel
         return true;
     }
 
+    // Método para salvar o serviço, seja criando um novo ou atualizando um existente.
     public void Salvar()
     {
         decimal valor = decimal.Parse(ValorTexto);
 
-        if (EstaEditando)
+        // Se estamos editando, atualizamos o serviço existente.
+        // Caso contrário, criamos um novo.
+        if (EstaEditando) // Atualizar um serviço existente.
         {
             var servicoAtualizado = new ServicoJardinagem
             {
@@ -136,7 +148,7 @@ public class FormServicoViewModel : BaseViewModel
 
             ServicoRepository.Atualizar(servicoAtualizado);
         }
-        else
+        else // Criar um novo serviço.
         {
             var novoServico = new ServicoJardinagem
             {
@@ -152,6 +164,7 @@ public class FormServicoViewModel : BaseViewModel
         }
     }
 
+    // Método para excluir o serviço atual, caso estejamos editando um serviço existente.
     public void Excluir()
     {
         var servico = ServicoRepository.Servicos.FirstOrDefault(s => s.Id == Id);

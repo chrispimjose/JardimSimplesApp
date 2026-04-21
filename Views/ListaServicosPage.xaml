@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JardimSimplesApp.Views.ListaServicosPage"
              Title="Serviços de Jardinagem">
-    
+
+    <!-- Página de listagem de serviços -->
+
         <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="12">
 
             <!-- Título -->
@@ -13,27 +15,32 @@
                    TextColor="{StaticResource VerdePrincipal}" />
 
             <!-- Botões -->
-            <HorizontalStackLayout Grid.Row="1" Spacing="5">
+            <HorizontalStackLayout Grid.Row="1" Spacing="3" HorizontalOptions="Center">
                 <Button Text="Novo Serviço"
                         Clicked="OnNovoServicoClicked"
-                        HorizontalOptions="FillAndExpand" />
+                        HorizontalOptions="FillAndExpand"
+                        Shadow="#000000 1 4"/>
 
                 <Button Text="Editar Selecionado"
                         Clicked="OnEditarServicoClicked"
+                        TextColor="DarkGreen"
                         BackgroundColor="{StaticResource VerdeSecundario}"
-                        HorizontalOptions="FillAndExpand" />
-                <Button Text="Excluir Selecionado"
+                        HorizontalOptions="FillAndExpand" 
+                        Shadow="#000000 1 4"/>
+                <Button Text="Excluir Item"
                         Clicked="OnExcluirServicoClicked"
                         BackgroundColor="Red"
                         TextColor="White"
-                        HorizontalOptions="FillAndExpand" />
+                        HorizontalOptions="FillAndExpand" 
+                        Shadow="#000000 1 4"/>
         </HorizontalStackLayout>
 
             <!-- Lista -->
         <CollectionView 
                     Grid.Row="2"
                     x:Name="ServicosCollectionView"
-                    SelectionMode="Single">
+                    SelectionMode="Single"
+                    SelectionChanged="OnServicoSelectionChanged">
             
 
                 <CollectionView.EmptyView>
@@ -46,13 +53,27 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="0,6"
-                               Padding="12"
-                               CornerRadius="12"
-                               BackgroundColor="{StaticResource VerdeClaro}"
-                               BorderColor="{StaticResource VerdeSecundario}">
+                    <Border Stroke="DarkGreen"
+                            StrokeThickness="1"
+                            BackgroundColor="{StaticResource VerdeClaro}"
+                            StrokeShape="RoundRectangle 12"
+                            Margin="3"
+                            Padding="20"
+                            >
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal" />
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <!-- >>> ALTERAÇÃO: destaque visual do item selecionado -->
+                                        <Setter Property="BackgroundColor" Value="LightGreen" />
+                                        <Setter Property="Stroke" Value="DarkGreen" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
 
-                            <VerticalStackLayout Spacing="4">
+                        <VerticalStackLayout Spacing="4">
                                 <Label Text="{Binding Cliente}"
                                        FontSize="20"
                                        FontAttributes="Bold"
@@ -64,7 +85,7 @@
                                 <Label Text="{Binding Valor, StringFormat='Valor: R$ {0:F2}'}" />
                                 <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

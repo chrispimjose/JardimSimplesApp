@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JardimSimplesApp.Views.SairPage"
              Title="SairPage">
+    <!-- Página de confirmação de saída do aplicativo -->
+    
     <VerticalStackLayout Padding="20" Spacing="20">
 
         <Label Text="Deseja sair do aplicativo?"

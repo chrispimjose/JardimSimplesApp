@@ -6,16 +6,17 @@ namespace JardimSimplesApp.Services
     public static class ServicoRepository
     {
         //Criando o objeto da lista de serviços, usando ObservableCollection para notificar a UI sobre mudanças.
-        public static ObservableCollection<ServicoJardinagem> Servicos { get; private set; }
-            = new ObservableCollection<ServicoJardinagem>();
+        public static ObservableCollection<ServicoJardinagem> Servicos { get; } = new ObservableCollection<ServicoJardinagem>(); 
 
         private static int _proximoId = 1;
 
         public static void CarregarDadosIniciais()
         {
+            // >>> IMPORTANTE: evita duplicar os dados quando o ViewModel é recriado
             if (Servicos.Count > 0)
                 return;
 
+            // Dados fake para criar a lista inicial de serviços. Na prática, isso viria de um banco de dados ou API.
             Servicos.Add(new ServicoJardinagem
             {
                 Id = _proximoId++,
@@ -50,12 +51,16 @@ namespace JardimSimplesApp.Services
             });
         }
 
+        // Métodos para manipular a coleção de serviços.
+        // Na prática, esses métodos poderiam interagir com um banco de dados ou API.
         public static void Adicionar(ServicoJardinagem servico)
         {
             servico.Id = _proximoId++;
             Servicos.Add(servico);
         }
 
+        // Atualiza um serviço existente na coleção. Isso é importante para garantir
+        // que a CollectionView seja notificada da mudança.
         public static void Atualizar(ServicoJardinagem servicoAtualizado)
         {
             var indice = Servicos.ToList().FindIndex(s => s.Id == servicoAtualizado.Id);
@@ -67,6 +72,8 @@ namespace JardimSimplesApp.Services
             }
         }
 
+        // Remove um serviço da coleção por ID. Isso é útil para garantir
+        // que a CollectionView seja notificada da remoção.
         public static void RemoverPorId(int id)
         {
             var servico = Servicos.FirstOrDefault(s => s.Id == id);
@@ -74,6 +81,7 @@ namespace JardimSimplesApp.Services
                 Servicos.Remove(servico);
         }
 
+        // Remove um serviço da coleção por referência. Isso é útil para garantir
         public static void Remover(ServicoJardinagem servico)
         {
             if (Servicos.Contains(servico))

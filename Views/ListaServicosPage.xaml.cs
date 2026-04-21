@@ -10,7 +10,11 @@ namespace JardimSimplesApp.Views
         // Propriedade estática usada para passar o serviço entre páginas
         public static ServicoJardinagem? ServicoParaEditar { get; set; }
 
- 
+        /// Campo para armazenar o serviço selecionado
+        private ServicoJardinagem? _servicoSelecionado;
+
+
+        // Construtor da página
         public ListaServicosPage()
         {
             InitializeComponent();
@@ -22,7 +26,12 @@ namespace JardimSimplesApp.Views
             ServicosCollectionView.ItemsSource = ServicoRepository.Servicos;
         }
 
-  
+        // Evento para atualizar o serviço selecionado quando o usuário muda a seleção
+        private void OnServicoSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _servicoSelecionado = e.CurrentSelection.FirstOrDefault() as ServicoJardinagem;
+        }
+
         // Abre a tela para cadastrar novo serviço
         private async void OnNovoServicoClicked(object sender, EventArgs e)
         {
@@ -30,41 +39,47 @@ namespace JardimSimplesApp.Views
             await Shell.Current.GoToAsync("formulario");
         }
 
+        // Abre a tela para editar o serviço selecionado
         private async void OnEditarServicoClicked(object sender, EventArgs e)
         {
-            var servicoSelecionado = ServicosCollectionView.SelectedItem as ServicoJardinagem;
 
-            if (servicoSelecionado == null)
+            // Verifica se um serviço foi selecionado
+            if (_servicoSelecionado == null)
             {
                 await DisplayAlert("Aviso", "Selecione um serviço para editar.", "OK");
                 return;
             }
 
             // Clona para editar sem mexer direto no item da lista
-            ServicoParaEditar = servicoSelecionado.Clonar();
-
+            ServicoParaEditar = _servicoSelecionado.Clonar();
+            
+            // Navega para o formulário de edição
             await Shell.Current.GoToAsync("formulario");
         }
 
+        // Exclui o serviço selecionado após confirmação
         private async void OnExcluirServicoClicked(object sender, EventArgs e)
         {
-            var servicoSelecionado = ServicosCollectionView.SelectedItem as ServicoJardinagem;
-
-            if (servicoSelecionado == null)
+            // Verifica se um serviço foi selecionado
+            if (_servicoSelecionado == null)
             {
                 await DisplayAlert("Aviso", "Selecione um serviço para excluir.", "OK");
                 return;
             }
 
+            // Pergunta ao usuário se ele tem certeza que quer excluir
             bool confirmar = await DisplayAlert(
                 "Confirmar",
-                $"Deseja excluir o serviço de {servicoSelecionado.Cliente}?",
+                $"Deseja excluir o serviço de {_servicoSelecionado.Cliente}?",
                 "Sim",
                 "Não");
 
+            // Se o usuário confirmar, remove o serviço do repositório
             if (confirmar)
             {
-                ServicoRepository.Remover(servicoSelecionado);
+                ServicoRepository.Remover(_servicoSelecionado);
+                // >>> ALTERAÇÃO: limpa a seleção após excluir
+                ServicosCollectionView.SelectedItem = null;
             }
         }
 
@@ -73,10 +88,12 @@ namespace JardimSimplesApp.Views
         // Quando a página reaparece, atualiza a lista e limpa a seleção
         protected override void OnAppearing()
         {
+            // Atualiza a lista para refletir quaisquer mudanças feitas na página de formulário
             base.OnAppearing();
             // Garante que a CollectionView continue ligada à coleção
-            ServicosCollectionView.ItemsSource = ServicoRepository.Servicos;
-            ServicosCollectionView.ItemsSource = null;
+            _servicoSelecionado = null;
+            // Limpa a seleção para evitar confusão
+            ServicosCollectionView.SelectedItem = null;
         }
     }
 }

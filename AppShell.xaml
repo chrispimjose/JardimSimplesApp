@@ -5,16 +5,33 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:JardimSimplesApp.Views"
     Title="JardimSimplesApp"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled"
+    
+    Shell.BackgroundColor="#1B5E20"
+    Shell.ForegroundColor="White"
+    Shell.TitleColor="White"
+    Shell.UnselectedColor="#BDBDBD"
+    
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarForegroundColor="#1B5E20"
+    Shell.TabBarTitleColor="#1B5E20"
+    Shell.TabBarUnselectedColor="#666666">
 
-
+    <!-- Define as abas do aplicativo -->
+    
     <TabBar>
         <ShellContent
             Title="Serviços"
+            Icon="servico1.png"
             ContentTemplate="{DataTemplate views:ListaServicosPage}" />
         <ShellContent
             Title="Sobre"
+            Icon="sobre.png"
             ContentTemplate="{DataTemplate views:SobrePage}" />
+        <ShellContent
+            Title="Sair"
+            Icon="sair.png"
+            ContentTemplate="{DataTemplate views:SairPage}" />
     </TabBar>
 
 

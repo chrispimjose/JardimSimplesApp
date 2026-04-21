@@ -4,34 +4,45 @@
              x:Class="JardimSimplesApp.Views.SobrePage"
              Title="Sobre">
 
+    <!-- Página de informações sobre o aplicativo -->
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
 
             <Label Text="Sobre o Aplicativo"
-                   FontSize="26"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource VerdePrincipal}" />
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="{StaticResource VerdePrincipal}" />
 
-            <Frame BackgroundColor="{StaticResource VerdeClaro}"
-                   BorderColor="{StaticResource VerdeSecundario}"
-                   CornerRadius="12"
-                   Padding="16">
+            <!-- >>> Ícone centralizado -->
+            <Image Source="inicio1.png"
+               WidthRequest="250"
+               HeightRequest="250"
+               HorizontalOptions="Center" />
+
+            <!-- Border -->
+            <Border BackgroundColor="{StaticResource VerdeClaro}"
+                Stroke="{StaticResource VerdeSecundario}"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                Padding="16">
 
                 <VerticalStackLayout Spacing="10">
                     <Label Text="{Binding NomeAplicativo}"
-                           FontSize="22"
-                           FontAttributes="Bold" />
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
 
                     <Label Text="{Binding Descricao}"
-                           LineBreakMode="WordWrap" />
+                       LineBreakMode="WordWrap" />
 
                     <Label Text="Recursos apresentados:"
-                           FontAttributes="Bold" />
+                       FontAttributes="Bold" />
 
                     <Label Text="{Binding Recursos}"
-                           LineBreakMode="WordWrap" />
+                       LineBreakMode="WordWrap" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>
